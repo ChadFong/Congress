@@ -16,19 +16,27 @@ module.exports = function (app, express) {
   var ideaRouter = express.Router();
   var voteRouter = express.Router();
   var commentRouter = express.Router();
+  var userRouter = express.Router();
+  var boardRouter = express.Router();
 
   // Associate the Express server app with the different modules that it should use.
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
+
   app.use(express.static(__dirname + '/../../client'));
   app.use(morgan('dev'));
   app.use(helpers.logErrors);
   app.use(helpers.handleErrors);
 
+
+  //Use board router to handle board requests.
+  app.use('/api/boards', boardRouter);
   // Use the idea router for all idea requests.
   app.use('/api/ideas', ideaRouter); 
   // Use vote router for requests related to upvoting or downvoting.
   app.use('/api/vote', voteRouter);
+
+  app.use('/api', userRouter);
   // Use comment router for requests related to adding and getting comments.
   app.use('/api/comments', commentRouter);
 
@@ -36,4 +44,6 @@ module.exports = function (app, express) {
   require('../ideas/ideaRoutes.js')(ideaRouter);
   require('../votes/voteRoutes.js')(voteRouter);
   require('../comments/commentRoutes.js')(commentRouter);
+  require('../users/usersRoutes.js')(userRouter);
+  require('../boards/boardRoutes.js')(boardRouter);
 };

@@ -1,0 +1,52 @@
+<div ng-controller="BoardsCtrl as bctrl">
+  <div class="jumbotron jumbo-top">
+    <h1 class="animated fadeInUp title-text">Lobbying Lobby</h1>
+    <form class="navbar-form navbar-middle" ng-submit="bctrl.submitBoard()">
+
+      <!-- Enter Board -->
+      <div class="form-idea animated fadeInUp">
+        <input name="idea-input" type="text" class="form-control form-title-control" placeholder="Enter topic here" ng-model="bctrl.board.boardName" required>
+      </div>
+      
+      <!-- Enter Description -->
+      <div ng-if="bctrl.submitted" class="form-description ng-cloak">
+        <textarea name="description-input" rows="3" class="form-control form-description-control" placeholder="Enter caption here" ng-model="bctrl.board.caption"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-default idea-submit-button animated fadeInUp">Submit</button>
+    </form>
+  </div>
+
+  <!-- User Feedback Message Area -->
+  <div class="user-feedback-container ng-cloak post-idea-animation" ng-if="bctrl.postSuccess" ng-click="bctrl.postSuccess = !bctrl.postSuccess">
+    <span class="post-idea-success">Your topic has been created.</span>
+  </div>
+
+  <!-- Board Row -->
+  <div class="row idea-post ng-cloak idea-post-repeat" ng-repeat="board in bctrl.data.boards track by board._id"> 
+    <div class="col-md-1">
+    </div>
+
+    <div class="idea-container">
+      <div class="col-md-1 upvote-downvote-wrapper" ng-controller="VotesCtrl as vctrl">
+        <div>Views:</div>
+        <div class="vote-points">{{ board.views }}</div>
+      </div>
+      <div class="col-md-8">
+        <div class="idea-wrapper">
+          <h3 class="idea-title" ng-click="bctrl.loadIdeas(board)">{{ board.boardName }}</h3>
+          <h5 class="idea-description">{{ board.caption | limitTo: 130 }}{{ board.caption.length > 130 ? '...' : ''}}</h5>
+          <p class="timestamp-author">Submitted {{ board.created_at | moment }} by {{ board.created_by }}</p>
+        </div>
+      </div>
+      <div class="col-md-1 ">
+        <div class="comments-wrapper">
+          <i class="fa fa-lightbulb-o"></i>
+          <p class="comments-amount">{{ board.ideas.length }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-1">
+    </div>
+  </div>
+</div>

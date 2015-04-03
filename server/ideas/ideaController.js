@@ -26,6 +26,7 @@ module.exports = {
 
   // Add a new idea to the MongoDB database.
   newIdea: function(req, res, next) {
+    console.log(req.body);
 
     // Bind the Mongoose create method to the Idea model, so that the Q module can use promises with it.
     var createIdea = Q.nbind(Idea.create, Idea);
@@ -33,9 +34,9 @@ module.exports = {
     // Create a new document from the Idea model. If successfully created then the new Idea document is returned.
     var newIdea = {
       title: req.body.title,
-      text: req.body.text
+      text: req.body.text,
+      created_by: req.body.username
     };
-
     createIdea(newIdea)
       .then(function (createdIdea) {
         if (createdIdea) {

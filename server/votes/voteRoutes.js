@@ -1,3 +1,5 @@
+var auth = require('./../users/usersController.js');
+
 // Votes Route
 // -----------
 //
@@ -8,7 +10,7 @@ var voteController = require('./voteController.js');
 module.exports = function (app) {
     // Further route from the /api/vote path. A POST to upvote will increase the vote count by 1 in the database. A POST to downvote will decrease the vote count by 1 in the database.
     app.route('/upvote')
-      .post(voteController.upvote);
+      .post(auth.checkAuth, voteController.upvote);
     app.route('/downvote')
-      .post(voteController.downvote);
+      .post(auth.checkAuth, voteController.downvote);
 };

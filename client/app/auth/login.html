@@ -1,8 +1,9 @@
 <div class="row">
   <div class="col-md-4"></div>
   <div class="col-md-4 login-form" ng-controller="AuthCtrl as actrl">
-    <form class="form-signin" name="signinForm" ng-submit="signinForm.$valid && ctrl.login()" /novalidate>
-      <img class="logo-large" src="../../assets/glint-logo-large-teal.png" alt="">
+    <form class="form-signin" name="signinForm" ng-submit="signinForm.$valid && actrl.signin()" /novalidate>
+      <img class="logo-large" src="../../assets/congress-black.png" alt="">
+      <!-- <div class="name-large">Congre$$</div> -->
       
       <label for="inputUsername" class="sr-only">Email address</label>
       <p class="error" ng-show="signinForm.username.$error.required">Required Field</p>
@@ -14,6 +15,16 @@
       
       <button class="btn btn-lg btn-primary btn-block login-button" type="submit" ng-disable="signinForm.$invalid">Login</button>
       <p class="sign-up-here">Not registered? Sign up <a href="#/signup">here</a></p>
+
+      <div class="outer">
+<!--         <div ng-if="loginPasswordFailure && loginUsernameFailure" class="animate-if innerContainer">Unconstitutional Username/Password
+        </div> -->
+        <div ng-if="actrl.loginPasswordFailure && !actrl.loginUsernameFailure" class="animate-if innerContainer">Unconstitutional Password
+        </div>
+        <div ng-if="actrl.loginUsernameFailure && !actrl.loginPasswordFailure" class="animate-if innerContainer">Unconstitutional Username
+        </div>
+      </div>
+
     </form>
   </div>
   <div class="col-md-4"></div>

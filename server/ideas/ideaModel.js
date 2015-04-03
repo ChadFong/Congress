@@ -16,7 +16,9 @@ var IdeaSchema = new mongoose.Schema({
     tags: [String],
     roles: [String],
     comments: [String],
-    delete_flag: { type: Boolean, default: false }
+    delete_flag: { type: Boolean, default: false },
+    lastUpVoted: { type: Date, default: "1980-03-25T22:48:19.803Z" },
+    lastDownVoted: { type: Date, default: "1980-03-25T22:48:19.803Z" } 
 });
 
 module.exports = mongoose.model('Idea', IdeaSchema);

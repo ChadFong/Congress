@@ -1,11 +1,39 @@
 var glintServices = angular.module('glint.services', []);
 
+glintServices.factory('localAccess', function () {
+  var _username = '';
+  var _votes = 0;
+
+  var setUser = function(user) {
+    this._username = user;
+  };
+
+  var setVotes = function(newVal) {
+    this._votes = newVal;
+  };
+
+  var getUser = function() {
+    return this._username;
+  };
+
+  var getVotes = function() {
+    return this._votes;
+  }
+
+  return {
+    setUser: setUser,
+    getUser: getUser,
+    setVotes: setVotes,
+    getVotes: getVotes
+  }
+});
+
 glintServices.factory('Ideas', function ($http){
 
-  var getIdeas = function (){
+  var getIdeas = function (path){
     return $http({
       method: 'GET',
-      url: '/api/ideas'
+      url: '/api/boards' + path
     }).then(function (response){
       return response.data;
     }).catch(function (error) {
@@ -13,10 +41,10 @@ glintServices.factory('Ideas', function ($http){
     });
   };
 
-  var createIdea = function (idea){
+  var createIdea = function (path, idea){
     return $http({
       method: 'POST',
-      url: '/api/ideas',
+      url: '/api/boards' + path,
       data: idea
     }).then(function (response){
       return response.data;
@@ -33,11 +61,17 @@ glintServices.factory('Ideas', function ($http){
 
 glintServices.factory('Votes', function($http){
 
-  var upvote = function (idea){
+  var upvote = function (path, idea){
+    //Group the data to be unpacked on the server.  
+    //The path is required for searching the database.
+    var groupedData = { 
+      path: path,
+      idea: idea
+    };
     return $http({
       method: 'POST',
       url: '/api/vote/upvote',
-      data: idea
+      data: groupedData
     })
     .then(function (response){
       return response.data;
@@ -47,11 +81,17 @@ glintServices.factory('Votes', function($http){
     });
   };
 
-  var downvote = function (idea){
+  var downvote = function (path, idea){
+    //Group the data to be unpacked on the server.  
+    //The path is required for searching the database.
+    var groupedData = { 
+      path: path,
+      idea: idea
+    };
     return $http({
       method: 'POST',
       url: '/api/vote/downvote',
-      data: idea
+      data: groupedData
     })
     .then(function (response){
       return response.data;
@@ -61,49 +101,76 @@ glintServices.factory('Votes', function($http){
     });
   };
 
+  var addVotes = function (user, amount) {
+    return $http({
+      method: 'POST',
+      url: '/api/votes',
+      data: {user: user, votes: amount}
+    })
+    .then(function (response) {
+      return response.data;
+    })
+    .catch(function (error){
+      console.error('Buy Votes error', error);
+    })
+  };
+
   return {
     upvote: upvote,
     downvote: downvote
   };
 });
 
-glintServices.factory('Auth', function($http){
+glintServices.factory('Auth', function($http, $window, $location){
 
-  var login = function (user){
+  var signin = function (user){
     return $http({
       method: 'POST',
       url: '/api/signin',
       data: user
     })
-    .then(function (response){
-      return response.data;
+    .success(function(data, status, headers, config) {
+      // this callback will be called asynchronously
+      // when the response is available
+      // want to set auth.js's $scope.loginFailure to false
     })
-    .catch(function (error) {
-      console.error('login error', error);
-    });  };
+    .error(function(data, status, headers, config) {
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+    // console.log('Error from Auth.signin factory');
+    // want to set auth.js's $scope.loginFailure to true
+  })
+ };
 
-  var signup = function (user){
-    return $http({
-      method: 'POST',
-      url: '/api/signup',
-      data: user
-    })
-    .then(function (response){
-      return response.data;
-    })
-    .catch(function (error) {
-      console.error('signup error', error);
+  var isAuth = function () {
+    return !!$window.localStorage.getItem('com.glint');
+  };
+
+    var signup = function (user){
+      return $http({
+        method: 'POST',
+        url: '/api/signup',
+        data: user
+      })
+
+    };
+
+    var signout = function () {
+    $window.localStorage.removeItem('com.glint');
+    $location.path('/#/login');
+    };
+
+
+      return {
+        signin: signin,
+        signup: signup,
+        signout: signout,
+        isAuth: isAuth
+      };
     });
-  };
-
-  return {
-    login: login,
-    signup: signup
-  };
-});
 
 glintServices.factory('Comments', function ($http){
-  
+
   var createComment = function (comment){
     return $http({
       method: 'POST',
@@ -135,3 +202,46 @@ glintServices.factory('Comments', function ($http){
   };
 });
 
+glintServices.factory('Boards', function ($http){
+
+  var getBoards = function (){
+    return $http({
+      method: 'GET',
+      url: '/api/boards'
+    }).then(function (response){
+      return response.data;
+    }).catch(function (error) {
+      console.error('getBoards error', error);
+    });
+  };
+
+  var createBoard = function (board){
+    return $http({
+      method: 'POST',
+      url: '/api/boards',
+      data: board
+    }).then(function (response){
+      return response.data;
+    }).catch(function (error) {
+      console.error('createBoard error', error);
+    });
+  };
+
+  var updateViews = function (boardName){
+    return $http({
+      method: 'POST',
+      url: '/api/boards/plusView',
+      data: {'boardName': boardName}
+    }).then(function (response){
+      return response.data;
+    }).catch(function (error) {
+      console.error('addView error', error);
+    });
+  };
+
+  return {
+    getBoards: getBoards,
+    createBoard: createBoard,
+    updateViews: updateViews
+  };
+});

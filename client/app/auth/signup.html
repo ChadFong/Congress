@@ -1,8 +1,9 @@
 <div class="row">
   <div class="col-md-4"></div>
   <div class="col-md-4 login-form" ng-controller="AuthCtrl as actrl">
-    <form class="form-signin" name="signupForm" ng-submit="signupForm.$valid && ctrl.signup()" /novalidate>
-      <img class="logo-large" src="../../assets/glint-logo-large-teal.png" alt="">
+    <form class="form-signin" name="signupForm" ng-submit="signupForm.$valid && actrl.signup()" /novalidate>
+      <img class="logo-large" src="../../assets/congress-black.png" alt="">
+      <!-- <div class="name-large">Congre$$</div> -->
 
       <label for="inputEmail" class="sr-only">Email address</label>
       <p class="error" ng-show="signupForm.username.$error.required">Required Field</p>
@@ -14,6 +15,10 @@
 
       <button class="btn btn-lg btn-primary btn-block login-button" type="submit" ng-disable="signupForm.$invalid">Sign up</button>
       <p class="sign-up-here">Already registered? Login <a href="#/login">here</a></p>
+
+      <div ng-if="actrl.userNameExists" class="animate-if innerContainer">Precedented Username
+      </div>
+
     </form>
   </div>
   <div class="col-md-4"></div>

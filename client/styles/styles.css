@@ -3,13 +3,85 @@
   display: none !important;
 }
 
+.no-votes {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 body {
   font-family: 'Lato', sans-serif !important;
+  padding-top: 50px;
+}
+
+.login-failure {
+  background-color: red;
+  color: white;
+  font-family: 'Lato', sans-serif !important;
+  font-size: 30px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+  border-radius: 25px;
+}
+
+.animate-if {
+  background-color: red;
+  color: white;
+  font-family: 'Lato', sans-serif !important;
+  font-size: 30px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+  border-radius: 25px;
+}
+
+.name-large {
+  color: #001414;
+  font-family: 'Lato', sans-serif !important;
+  font-size: 70px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 35px;
+  margin-top: 30px;
+  border-radius: 25px;
+}
+
+.animate-if.ng-enter, .animate-if.ng-leave {
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
+}
+
+.animate-if.ng-enter,
+.animate-if.ng-leave.ng-leave-active {
+  opacity:0;
+}
+
+.animate-if.ng-leave,
+.animate-if.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
+.outerContainer {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.innerContainer {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  padding-right: 9px;
+  padding-left: 9px;
+  left: 0;
+  right: 0;
 }
 
 .nav-bar-custom {
-  background-color: #046380;
+  background-color: #222;
   color: white;
+  border-bottom: 1px solid #555;
 }
 
 .nav-bar-custom a{
@@ -29,11 +101,16 @@ body {
   padding-top: 2px;
 }
 
+.jumbotron { min-height: 500px;}
+
 .jumbo-top {
   padding: 20px 0 !important;
 	text-align: center;
   margin-bottom: 0 !important;
-  background-image: url('../assets/blackboard-background.png');
+  background-image: url('../assets/Capitol-Reflection.jpg');
+  background-position: 50% 22%;
+  background-size: cover;
+  border-bottom: 1px solid #555;
 }
 
 .jumbo-top h1 {
@@ -41,6 +118,7 @@ body {
   font-family: 'Lato', sans-serif;
   font-weight: bold;
 }
+
 
 input.form-control {
   width: 650px !important;
@@ -101,8 +179,8 @@ i.fa-sort-asc:active, i.fa-sort-desc:active {
   padding-bottom: 15px;
 }
 
-i.fa-comments {
-  font-size: 30px;
+i.fa-lightbulb-o {
+  font-size: 35px;
 }
 
 i.fa-comments:hover {
@@ -188,9 +266,11 @@ input.form-description-control {
 }
 
 img.logo-large {
-  width: 60%;
-  margin-top: 25%;
-  margin-bottom: 5%;
+  width: 103%;
+  margin-top: 15%;
+  margin-bottom: 9%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .sign-up-here {
@@ -284,4 +364,45 @@ a.glint-logo-icon:link{
   height: 0;
   padding: 0;
   opacity: 0;
+}
+
+.title-text {
+  color: black !important;
+  text-shadow: -1px 0 #A4A6AB, 0 1px #A4A6AB, 1px 0 #A4A6AB, 0 -1px #A4A6AB;
+}
+
+.pic {
+  left: -50px;
+  width:100px;
+  height:100px;
+}
+
+.upvote {
+  vertical-align: top;
+  background-color: red !important;
+  width : 15px;
+  display: inline-block;
+  margin: 0 auto;
+
+}
+.voting-bars{
+  width : 20px;
+  height: 20px;
+  display : inline-block;
+  margin : 0 auto;
+}
+
+.downvote {
+  vertical-align: top;
+  background-color: blue !important;
+  width : 15px;
+  display : inline-block;
+  margin : 0 auto; 
+}
+.icon-bars {
+  margin : 0 auto;
+  display : inline-block;
+  vertical-align : top;
+  height : 30px;
+  width : 30px;
 }

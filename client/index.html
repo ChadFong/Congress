@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Glint</title>
+  <title>CONGRE$$</title>
   <link rel="stylesheet" href="styles/styles.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
@@ -12,20 +12,22 @@
   <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
 </head>
 
-<body ng-app="glint" ng-controller="IdeasCtrl as ictrl">
-  <nav class="container-fluid nav-bar-custom">
+<body ng-app="glint">
+  <nav class="container-fluid nav-bar-custom navbar-fixed-top">
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-left">
         <li class="nav-logo">
-          <a class="glint-logo-icon" href="#/"><img src="assets/glint-logo-small.png" alt=""></a>&nbsp;&nbsp;&nbsp;|</li>
-        <li class="tagline">Where programmers meet ideas</li>
+          <a class="glint-logo-icon" href="#/"><img src="assets/congress-small-logo.png" alt=""></a>&nbsp;&nbsp;&nbsp;|</li>
+        <li class="tagline">"Free" $peech</li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-right" ng-controller="AuthCtrl as actrl">
       
-        <!-- <li><a href="#">User</a></li> -->
-        <!-- <li><a href="#">Messages</a></li> -->
+
+        <li><a ng-click="actrl.buyVotes()">Buy 100 Votes!</a></li>
+        <li><a ng-click="actrl.test()">{{ localVars.username }}{{ localVars.votes }} </a></li>
         <li><a href="http://adventurous-starfish.github.io/glint/">About</a></li>
         <li><a class ="login" href="#/login">Login</a></li>
+        <li><a class ="logout" href="#/signout" ng-click="actrl.signout()">Logout</a></li>
         <!-- <li><a href="#"><i class="fa fa-plus"></i></a></li> -->
       </ul>
     </div>
@@ -40,6 +42,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
   <script src="app/glint.js"></script>
   <script src="common/services.js"></script>
+  <script src="app/boards/boards.js"></script>
   <script src="app/ideas/ideas.js"></script>
   <script src="app/votes/votes.js"></script>
   <script src="app/auth/auth.js"></script>
