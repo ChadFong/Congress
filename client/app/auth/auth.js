@@ -17,7 +17,7 @@ angular.module('glint.auth', [])
   $interval(function(){
     $scope.localVars.username = localAccess.getUser();
     $scope.localVars.votes = localAccess.getVotes();
-  }, 1000)
+  }, 1000);
 
   $scope.localVars.username = localStorage['com.glint'] !== undefined ? JSON.parse(localStorage['com.glint']).username + ' has ' : 'Buy votes, ';
   $scope.localVars.votes = localStorage['com.glint'] !== undefined ? JSON.parse(localStorage['com.glint']).votes: 'change the world';
